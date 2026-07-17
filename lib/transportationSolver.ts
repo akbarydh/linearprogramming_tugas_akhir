@@ -40,13 +40,14 @@ export function solveTransportation(inputs: SolverInput) {
       mdn_mks: { cost: 350, mdn_cap: 1, mks_dem: 1 },
       mdn_bpa: { cost: 300, mdn_cap: 1, bpa_dem: 1 },
     },
-  };
+  } as const; // <-- Mengunci tipe data agar Vercel mengenali 'min' sebagai ObjectiveDirection
 
-  const results = solver.Solve(model);
+  // Menentukan tipe data dynamic pada results agar tidak memicu eror strict linting
+  const results = solver.Solve(model) as Record<string, any>;
 
   return {
     feasible: results.feasible,
-    totalCost: results.result,
+    totalCost: results.result || 0,
     allocation: {
       Jakarta: {
         Bandung: results.jkt_bdg || 0,
