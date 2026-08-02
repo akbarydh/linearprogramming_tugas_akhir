@@ -45,17 +45,9 @@ Di mana $C_{ij}$ adalah biaya pengiriman per unit dari kota $i$ ke kota $j$.
 
 ---
 
-## ✨ 4. Fitur Utama Aplikasi
 
-* 🎛️ **Form Input Interaktif**: Penginputan kapasitas pasokan (*supply*) 3 kota asal dan permintaan (*demand*) 4 kota tujuan.
-* ⚡ **Solver Otomatis**: Perhitungan alokasi teroptimasi secara instan menggunakan algoritma Simplex via `javascript-lp-solver`.
-* 📊 **Dashboard KPI**: Ringkasan indikator utama (Total Biaya Distribusi, Total Pasokan, Total Permintaan, dan Selisih Keseimbangan).
-* 📋 **Matriks Alokasi Hasil**: Tabel alokasi terperinci yang menunjukkan berapa unit barang yang dikirim dari tiap sumber ke tiap tujuan.
-* 📈 **Visualisasi Chart Distribusi**: Grafik batang interaktif (*Recharts*) untuk membandingkan volume distribusi antar rute.
 
----
-
-## 🛠️ 5. Teknologi yang Digunakan (Tech Stack)
+## 🛠️ 4. Teknologi yang Digunakan (Tech Stack)
 
 * **Framework Utama**: Next.js 16 (App Router), React 19, TypeScript
 * **Styling & UI**: Tailwind CSS v4, Lucide Icons, Shadcn UI / Custom Components
@@ -65,7 +57,7 @@ Di mana $C_{ij}$ adalah biaya pengiriman per unit dari kota $i$ ke kota $j$.
 
 ---
 
-## 📂 6. Struktur Direktori Utama
+## 📂 5. Struktur Direktori Utama
 
 ```text
 ├── app/
@@ -84,7 +76,7 @@ Di mana $C_{ij}$ adalah biaya pengiriman per unit dari kota $i$ ke kota $j$.
 
 ---
 
-## 🚀 7. Cara Memulai (Getting Started)
+## 🚀 6. Cara Memulai (Getting Started)
 
 1. **Clone repository & masuk ke direktori proyek**:
    ```bash
@@ -106,7 +98,7 @@ Di mana $C_{ij}$ adalah biaya pengiriman per unit dari kota $i$ ke kota $j$.
 
 ---
 
-## 💡 8. Panduan Bahan Slide Presentasi (PPT Outline)
+## 💡 7. Panduan Bahan Slide Presentasi (PPT Outline)
 
 Bagi Anda yang ingin mengutip file README ini untuk bahan slide PPT:
 1. **Slide 1**: Judul Proyek & Anggota Tim (LogiPlan - Decision Support System).
