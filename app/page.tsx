@@ -30,7 +30,6 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Data Matriks Biaya Kirim konstan (Sesuai parameter model LP)
   const biayaMatriks = {
     Jakarta: { Bandung: 100, Semarang: 120, Makassar: 300, Balikpapan: 250 },
     Surabaya: { Bandung: 140, Semarang: 100, Makassar: 180, Balikpapan: 160 },
@@ -55,7 +54,7 @@ export default function Home() {
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Terjadi kesalahan.');
+      if (!response.ok) throw new Error(data.error || 'Terjadi kesalahan sistem.');
 
       setResult(data);
     } catch (err: any) {
@@ -69,140 +68,126 @@ export default function Home() {
   const selisih = result ? result.totalSupply - result.totalDemand : 0;
 
   return (
-    <main className="min-h-screen bg-[#0b0f19] text-slate-200 selection:bg-indigo-500/30">
-      {/* Top Glassmorphism Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#0b0f19]/70 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <main className="min-h-screen bg-slate-950 text-slate-100 font-sans border-t-2 border-indigo-600">
+      {/* Header Utama */}
+      <header className="border-b border-slate-800 bg-slate-900/50">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-xl">🚚</span>
-            <div>
-              <h1 className="text-sm font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-                LogiPlan SPK
-              </h1>
-              <p className="text-[10px] text-slate-500 font-medium tracking-wide uppercase">Transportation Problem Solver</p>
-            </div>
+            <h1 className="text-sm font-semibold tracking-wide text-slate-100 uppercase">
+              LogiPlan <span className="text-slate-500 font-normal">| Decision Support System</span>
+            </h1>
           </div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-            Monolith Architecture
+          <div className="text-[11px] font-mono text-slate-400 bg-slate-800/80 px-2.5 py-1 rounded border border-slate-700">
+            Linear Programming Solver
           </div>
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
-        {/* Title Hero */}
-        <div className="space-y-2">
-          <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-            Sistem Pendukung Keputusan Distribusi Logistik Nasional
+      <div className="max-w-6xl mx-auto px-6 py-8 space-y-8">
+        {/* Title */}
+        <div className="border-b border-slate-800 pb-5">
+          <h2 className="text-xl font-bold tracking-tight text-white">
+            Optimasi Rute Distribusi Logistik
           </h2>
-          <p className="text-sm text-slate-400 max-w-2xl leading-relaxed">
-            Optimasi alokasi pasokan barang secara otomatis menggunakan model matriks transportasi untuk mencapai efisiensi biaya distribusi paling minimum.
+          <p className="text-xs text-slate-400 mt-1 max-w-3xl leading-relaxed">
+            Perhitungan alokasi pasokan barang menggunakan pendekatan matriks transportasi untuk meminimalkan total biaya distribusi nasional.
           </p>
         </div>
 
-        {/* 📚 Penjelasan Model LP Untuk Dosen */}
-        <div className="bg-[#121826] border border-slate-800/80 rounded-xl p-6 space-y-4 shadow-md">
-          <div className="flex items-center gap-2 border-b border-slate-800 pb-2">
-            <span className="text-indigo-400">📘</span>
-            <h3 className="text-sm font-bold text-white tracking-wide uppercase">Dasar Teori & Pemodelan Linear Programming</h3>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-400 leading-relaxed font-medium">
-            <div className="space-y-2">
-              <h4 className="text-slate-200 font-semibold text-sm">🎯 Fungsi Tujuan (Objective Function)</h4>
-              <p>Meminimalkan akumulasi total ongkos biaya transportasi dari seluruh rute gudang menuju kota tujuan:</p>
-              <div className="bg-[#0b0f19] p-3 rounded-lg border border-slate-800 text-center font-mono text-indigo-400 text-sm my-2">
-                Min Z = ∑ (Biaya × Jumlah Pengiriman)
-              </div>
-              <p>Sistem akan secara adaptif menekan variabel keputusan pengiriman pada rute dengan bobot ongkos termahal.</p>
+        {/* Dokumentasi Model LP */}
+        <div className="bg-slate-900/40 border border-slate-800 rounded-lg p-5 space-y-3">
+          <h3 className="text-xs font-semibold text-slate-300 tracking-wider uppercase border-b border-slate-800 pb-2">
+            Model Matematika
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-400">
+            <div>
+              <p className="font-medium text-slate-200 mb-1">Fungsi Tujuan</p>
+              <p className="text-slate-400">Meminimalkan total biaya transportasi:</p>
+              <p className="font-mono text-indigo-400 bg-slate-950 p-2 rounded border border-slate-800 my-2 text-center text-xs">
+                Min Z = ∑ (c_ij × x_ij)
+              </p>
             </div>
-            <div className="space-y-2">
-              <h4 className="text-slate-200 font-semibold text-sm">🚧 Kendala Batasan (Constraints)</h4>
+            <div>
+              <p className="font-medium text-slate-200 mb-1">Batasan Sistem</p>
               <ul className="list-disc list-inside space-y-1 text-slate-400">
-                <li><strong className="text-slate-300">Kapasitas Suplai:</strong> Total barang keluar dari tiap gudang tidak boleh melampaui kapasitas maksimum stok tersedia.</li>
-                <li><strong className="text-slate-300">Permintaan Pasar:</strong> Kebutuhan wajib kota tujuan harus terpenuhi secara presisi sesuai permintaan pasar.</li>
-                <li><strong className="text-slate-300">Non-Negatif:</strong> Nilai volume kirim tidak boleh di bawah angka nol ({"x_ij ≥ 0"}).</li>
+                <li>Total pengiriman tidak melebihi kapasitas gudang asal.</li>
+                <li>Seluruh pemenuhan kuota kota tujuan wajib terpenuhi.</li>
+                <li>Variabel keputusan bernilai non-negatif (x_ij ≥ 0).</li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* Main Entry Form */}
-        <form onSubmit={handleCalculate} className="bg-[#121826] border border-slate-800/60 rounded-xl shadow-xl overflow-hidden">
-          <div className="p-6 md:p-8 space-y-8">
+        {/* Form Input */}
+        <form onSubmit={handleCalculate} className="bg-slate-900/40 border border-slate-800 rounded-lg overflow-hidden">
+          <div className="p-6 space-y-6">
             
-            {/* 1. Kapasitas Gudang */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 pb-2 border-b border-slate-800">
-                <span className="text-slate-400 text-sm">📦</span>
-                <h3 className="text-sm font-semibold tracking-wide text-slate-200 uppercase">1. Kapasitas Gudang Asal (Supply dalam Satuan Ton)</h3>
-              </div>
-              <p className="text-xs text-slate-400">Masukkan batasan persediaan produk mentah/jadi yang siap dimobilisasi pada masing-masing titik koordinat gudang asal.</p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {/* Input Kapasitas Gudang */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-semibold tracking-wider text-slate-300 uppercase border-b border-slate-800 pb-2">
+                1. Kapasitas Gudang Asal (Ton)
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {['jakarta', 'surabaya', 'medan'].map((gudang) => (
-                  <div key={gudang} className="space-y-1.5">
+                  <div key={gudang} className="space-y-1">
                     <label className="text-xs font-medium text-slate-400 capitalize">{gudang}</label>
                     <Input 
                       type="number" 
                       name={gudang} 
                       value={inputs[gudang]} 
                       onChange={handleInputChange} 
-                      className="bg-[#0b0f19] border-slate-800 text-white focus-visible:ring-indigo-500/50 focus-visible:border-indigo-500 h-10 rounded-lg text-sm" 
+                      className="bg-slate-950 border-slate-800 text-slate-100 focus-visible:ring-1 focus-visible:ring-indigo-500 rounded h-9 text-xs" 
                     />
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* 2. Kebutuhan Kota */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 pb-2 border-b border-slate-800">
-                <span className="text-slate-400 text-sm">🏙️</span>
-                <h3 className="text-sm font-semibold tracking-wide text-slate-200 uppercase">2. Kebutuhan Kota Tujuan (Demand dalam Satuan Ton)</h3>
-              </div>
-              <p className="text-xs text-slate-400">Masukkan ambang kuota minimal volume komoditas yang wajib dipasok ke masing-masing klaster wilayah agar pasar tidak mengalami defisit.</p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+            {/* Input Kebutuhan Kota */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-semibold tracking-wider text-slate-300 uppercase border-b border-slate-800 pb-2">
+                2. Kebutuhan Wilayah Tujuan (Ton)
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {['bandung', 'semarang', 'makassar', 'balikpapan'].map((kota) => (
-                  <div key={kota} className="space-y-1.5">
+                  <div key={kota} className="space-y-1">
                     <label className="text-xs font-medium text-slate-400 capitalize">{kota}</label>
                     <Input 
                       type="number" 
                       name={kota} 
                       value={inputs[kota]} 
                       onChange={handleInputChange} 
-                      className="bg-[#0b0f19] border-slate-800 text-white focus-visible:ring-indigo-500/50 focus-visible:border-indigo-500 h-10 rounded-lg text-sm" 
+                      className="bg-slate-950 border-slate-800 text-slate-100 focus-visible:ring-1 focus-visible:ring-indigo-500 rounded h-9 text-xs" 
                     />
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* 💰 3. Matriks Biaya Distribusi */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 pb-2 border-b border-slate-800">
-                <span className="text-indigo-400 text-sm">💰</span>
-                <h3 className="text-sm font-semibold tracking-wide text-slate-200 uppercase">3. Matriks Parameter Biaya Distribusi (Ribu Rp / Ton)</h3>
-              </div>
-              <p className="text-xs text-slate-400">Variabel koefisien ongkos kirim per 1 ton logistik. Angka ini bertindak sebagai bobot pengali utama (c_ij) dalam kalkulasi fungsi objektif.</p>
-              
-              <div className="overflow-hidden rounded-lg border border-slate-800 bg-[#0b0f19]">
+            {/* Matriks Biaya */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-semibold tracking-wider text-slate-300 uppercase border-b border-slate-800 pb-2">
+                3. Matriks Biaya Distribusi (Ribu Rp / Ton)
+              </h3>
+              <div className="rounded border border-slate-800 overflow-hidden bg-slate-950">
                 <Table>
-                  <TableHeader className="bg-[#121826]">
-                    <TableRow className="border-b border-slate-800 hover:bg-transparent">
-                      <TableHead className="text-slate-400 font-bold text-xs">Asal / Tujuan</TableHead>
-                      <TableHead className="text-slate-400 font-bold text-xs">Bandung</TableHead>
-                      <TableHead className="text-slate-400 font-bold text-xs">Semarang</TableHead>
-                      <TableHead className="text-slate-400 font-bold text-xs">Makassar</TableHead>
-                      <TableHead className="text-slate-400 font-bold text-xs">Balikpapan</TableHead>
+                  <TableHeader className="bg-slate-900">
+                    <TableRow className="border-b border-slate-800">
+                      <TableHead className="text-slate-400 text-xs h-8">Asal / Tujuan</TableHead>
+                      <TableHead className="text-slate-400 text-xs h-8">Bandung</TableHead>
+                      <TableHead className="text-slate-400 text-xs h-8">Semarang</TableHead>
+                      <TableHead className="text-slate-400 text-xs h-8">Makassar</TableHead>
+                      <TableHead className="text-slate-400 text-xs h-8">Balikpapan</TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody className="divide-y divide-slate-800/60">
+                  <TableBody>
                     {Object.keys(biayaMatriks).map((gudang) => (
-                      <TableRow key={gudang} className="hover:bg-slate-800/20 border-b border-slate-800/40">
-                        <td className="p-3 text-xs font-bold text-slate-300 bg-[#121826]/30">{gudang}</td>
-                        <td className="p-3 text-xs font-mono text-slate-400">Rp {biayaMatriks[gudang as keyof typeof biayaMatriks].Bandung.toLocaleString()}k</td>
-                        <td className="p-3 text-xs font-mono text-slate-400">Rp {biayaMatriks[gudang as keyof typeof biayaMatriks].Semarang.toLocaleString()}k</td>
-                        <td className="p-3 text-xs font-mono text-slate-400">Rp {biayaMatriks[gudang as keyof typeof biayaMatriks].Makassar.toLocaleString()}k</td>
-                        <td className="p-3 text-xs font-mono text-slate-400">Rp {biayaMatriks[gudang as keyof typeof biayaMatriks].Balikpapan.toLocaleString()}k</td>
+                      <TableRow key={gudang} className="border-b border-slate-800/50">
+                        <td className="p-2 text-xs font-medium text-slate-300 bg-slate-900/50">{gudang}</td>
+                        <td className="p-2 text-xs font-mono text-slate-400">Rp {biayaMatriks[gudang as keyof typeof biayaMatriks].Bandung.toLocaleString()}k</td>
+                        <td className="p-2 text-xs font-mono text-slate-400">Rp {biayaMatriks[gudang as keyof typeof biayaMatriks].Semarang.toLocaleString()}k</td>
+                        <td className="p-2 text-xs font-mono text-slate-400">Rp {biayaMatriks[gudang as keyof typeof biayaMatriks].Makassar.toLocaleString()}k</td>
+                        <td className="p-2 text-xs font-mono text-slate-400">Rp {biayaMatriks[gudang as keyof typeof biayaMatriks].Balikpapan.toLocaleString()}k</td>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -210,76 +195,58 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Cara Kerja Mekanisme Inferensi */}
-            <div className="bg-[#161d2f]/30 border border-slate-800 rounded-lg p-4 text-[11px] text-slate-400 leading-relaxed">
-              💡 <strong>Mekanisme Logika Inferensi:</strong> Ketika tombol ditekan, mesin optimasi Next.js akan membaca variabel input, memeriksa kelayakan parameter (*feasibility check*), menyusun matriks pembatas dan mengeksekusi metode algoritma *Highs Simplex* untuk memotong rute tidak efisien.
-            </div>
-
           </div>
 
-          {/* Action Button Section */}
-          <div className="bg-[#161d2f]/50 border-t border-slate-800/80 px-6 py-4 flex justify-end">
+          <div className="bg-slate-900/80 border-t border-slate-800 px-6 py-3 flex justify-end">
             <Button 
               type="submit" 
               disabled={loading} 
-              className="bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm px-6 py-5 shadow-lg shadow-indigo-600/10 rounded-lg transition-all active:scale-[0.98]"
+              className="bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs px-5 py-2 rounded transition-colors"
             >
-              {loading ? (
-                <div className="flex items-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                  Mengeksekusi Algoritma Simplex...
-                </div>
-              ) : (
-                '🚀 Jalankan Optimasi Distribusi'
-              )}
+              {loading ? 'Memproses Optimization Solver...' : 'Hitung Alokasi Optimal'}
             </Button>
           </div>
         </form>
 
-        {/* Error Notification */}
+        {/* Notifikasi Error */}
         {error && (
-          <div className="bg-red-500/5 border border-red-500/20 text-red-400 px-5 py-4 rounded-xl text-xs flex items-center gap-2">
-            ⚠️ <strong>Kegagalan Validasi Model:</strong> {error}
+          <div className="bg-red-950/40 border border-red-800/80 text-red-400 px-4 py-3 rounded text-xs">
+            <strong>Kesalahan Parameter:</strong> {error}
           </div>
         )}
 
-        {/* Output Section */}
+        {/* Hasil Optimasi */}
         {result && (
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-3 duration-300">
-            {/* Metric Kpis Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <KPI title="Total Kapasitas Terpasang" value={`${result.totalSupply.toLocaleString()} Ton`} />
-              <KPI title="Total Kebutuhan Wilayah" value={`${result.totalDemand.toLocaleString()} Ton`} />
-              <KPI title="Biaya Distribusi Minimum (Z)" value={`Rp ${result.totalCost.toLocaleString()} Juta`} isHighlight />
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <KPI title="Total Kapasitas" value={`${result.totalSupply.toLocaleString()} Ton`} />
+              <KPI title="Total Permintaan" value={`${result.totalDemand.toLocaleString()} Ton`} />
+              <KPI title="Biaya Minimum (Z)" value={`Rp ${result.totalCost.toLocaleString()} Juta`} isHighlight />
             </div>
 
-            {/* Dashboard Visual Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <ResultTable allocation={result.allocation} inputs={inputs} />
               <div className="h-full">
                 <DistributionChart allocation={result.allocation} />
               </div>
             </div>
 
-            {/* Executive Analysis Box */}
-            <div className="bg-[#121826] border border-slate-800/80 rounded-xl p-6 shadow-md space-y-4">
-              <div className="flex items-center gap-2">
-                <span className="text-indigo-400">⚡</span>
-                <h3 className="text-sm font-bold text-white tracking-wide uppercase">Kesimpulan Analisis Data (Interpretasi Hasil)</h3>
-              </div>
-              <div className="text-xs text-slate-400 leading-relaxed space-y-3 font-medium">
+            {/* Ringkasan Eksekutif */}
+            <div className="bg-slate-900/40 border border-slate-800 rounded-lg p-5 space-y-2">
+              <h3 className="text-xs font-semibold text-slate-300 tracking-wider uppercase border-b border-slate-800 pb-2">
+                Analisis Hasil Optimasi
+              </h3>
+              <div className="text-xs text-slate-400 leading-relaxed space-y-2 font-normal">
                 <p>
-                  Berdasarkan hasil pemrosesan matriks keputusan linear programming, alokasi jaringan distribusi komoditas logistik dinyatakan memiliki **solusi layak optimal** (*optimal feasible solution*). 
-                  Seluruh kebutuhan daerah target operasional sebesar <span className="text-slate-200 font-bold">{result.totalDemand} Ton</span> berhasil disuplai penuh dengan pengeluaran akhir serendah mungkin yaitu 
-                  <span className="text-indigo-400 font-bold"> Rp {result.totalCost.toLocaleString()} Juta</span>.
+                  Sistem menemukan solusi optimal layak (<em>optimal feasible solution</em>). Seluruh kebutuhan daerah tujuan sebesar <span className="text-slate-200 font-medium">{result.totalDemand} Ton</span> terpenuhi dengan akumulasi biaya logistik terendah senilai <span className="text-indigo-400 font-medium">Rp {result.totalCost.toLocaleString()} Juta</span>.
                 </p>
                 {selisih > 0 ? (
-                  <p className="border-t border-slate-800/80 pt-3 text-slate-500">
-                    💡 <span className="text-slate-400 font-semibold">Analisis Kasus Batasan (Unbalanced Supply):</span> Akibat nilai kapasitas pasokan awal lebih besar dari target pasar, sistem secara cerdas menyisakan stok muatan sebesar <span className="text-indigo-300 font-semibold">{selisih} Ton</span> pada tangki penyimpanan gudang asal. Alokasi *idle capacity* sengaja diletakkan pada unit rute logistik dengan tarif per mil/ton termahal agar efisiensi maksimal dapat terjaga.
+                  <p className="text-slate-400 pt-2 border-t border-slate-800/60">
+                    Model beroperasi dalam kondisi persediaan berlebih (<em>unbalanced supply</em>). Terdapat sisa persediaan sebesar <span className="text-slate-200 font-medium">{selisih} Ton</span> di gudang asal yang dialokasikan pada rute bernilai efisiensi terendah untuk mencegah pembengkakan biaya.
                   </p>
                 ) : (
-                  <p className="border-t border-slate-800/80 pt-3 text-slate-500">
-                    💡 <span className="text-slate-400 font-semibold">Analisis Kasus Batasan (Balanced Supply):</span> Sistem berada pada kondisi setimbang (*balanced transportation model*). Seluruh kapasitas gudang terserap 100% tanpa menyisakan muatan mati di gudang asal.
+                  <p className="text-slate-400 pt-2 border-t border-slate-800/60">
+                    Model beroperasi dalam kondisi seimbang (<em>balanced supply</em>). Seluruh kuota persediaan terdistribusi secara penuh tanpa sisa stok.
                   </p>
                 )}
               </div>
